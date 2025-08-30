@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UI Kit - Chatbot AI (Tailwind, HTML thuần)</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome (icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" referrerpolicy="no-referrer" />
+    <style>
+      /* Optional: subtle scrollbar */
+      * { scrollbar-width: thin; scrollbar-color: rgb(209 213 219) transparent; }
+      *::-webkit-scrollbar { height: 8px; width: 8px; }
+      *::-webkit-scrollbar-thumb { background: rgb(209 213 219); border-radius: 999px; }
+
+      /* Desktop History toggle effects (no JS) */
+      @media (min-width: 1024px) {
+        /* Slide/fade sidebar and expand chat */
+        #desktop-history-toggle ~ aside {
+          width: 20rem; /* 320px */
+          transition: width 300ms ease, transform 300ms ease, opacity 300ms ease;
+        }
+        #desktop-history-toggle:checked ~ aside {
+          display: flex !important; /* override hidden to allow transition */
+          width: 0;
+          transform: translateX(-0.5rem);
+          opacity: 0;
+          pointer-events: none;
+        }
+        #desktop-history-toggle ~ section {
+          flex: 1 1 0%;
+          transition: all 300ms ease;
+        }
+
+        /* Button icon rotates when sidebar hidden */
+        .desktop-history-btn i { transition: transform 200ms ease; }
+        #desktop-history-toggle:checked ~ section .desktop-history-btn i {
+          transform: rotate(180deg);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-white text-gray-900 antialiased">
+    <a href="#chat" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-blue-600 focus:px-3 focus:py-1.5 focus:text-white">Bỏ qua đến nội dung</a>
+
+    <!-- BEGIN: ChatContainer -->
+    <main id="chat" role="region" aria-label="Giao diện chat bot AI" class="w-full h-[100dvh] px-2 sm:px-4 py-0 overflow-hidden">
+      <div class="relative h-full flex gap-3 sm:gap-4 overflow-hidden">
+        <!-- Desktop sidebar toggle (peer) -->
+        <input id="desktop-history-toggle" type="checkbox" class="peer absolute opacity-0 pointer-events-none" aria-hidden="true" />
+
+        <!-- BEGIN: Sidebar (Lịch sử chat - Desktop) -->
+        <aside role="complementary" aria-label="Lịch sử chat" class="hidden lg:flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden peer-checked:lg:hidden">
+          <div class="sticky top-0 z-10 border-b border-gray-200 bg-white/90 px-4 py-3 backdrop-blur">
+            <h2 class="text-sm font-semibold text-gray-800">Lịch sử chat</h2>
+            <p class="text-xs text-gray-500">Các đoạn hội thoại gần đây</p>
+          </div>
+          <div class="flex-1 overflow-y-auto p-3 sm:p-4">
+            <ul role="list" class="space-y-2" aria-label="Danh sách hội thoại">
+              <li>
+                <a href="#" aria-current="page" class="group flex items-start gap-3 rounded-md border border-transparent px-3 py-2 hover:border-gray-200 hover:bg-gray-50 aria-[current=page]:border-gray-200 aria-[current=page]:bg-gray-50">
+                  <i class="fa-regular fa-message mt-0.5 text-gray-400 group-hover:text-gray-600" aria-hidden="true"></i>
+                  <div class="min-w-0">
+                    <p class="truncate text-sm font-medium text-gray-800">Tóm tắt tài liệu PDF</p>
+                    <p class="truncate text-xs text-gray-500">Bạn có thể tóm tắt file này không?</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="group flex items-start gap-3 rounded-md border border-transparent px-3 py-2 hover:border-gray-200 hover:bg-gray-50">
+                  <i class="fa-regular fa-message mt-0.5 text-gray-400 group-hover:text-gray-600" aria-hidden="true"></i>
+                  <div class="min-w-0">
+                    <p class="truncate text-sm font-medium text-gray-800">Sinh kế hoạch học tập</p>
+                    <p class="truncate text-xs text-gray-500">Môn: FE, thời lượng: 4 tuần</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="group flex items-start gap-3 rounded-md border border-transparent px-3 py-2 hover:border-gray-200 hover:bg-gray-50">
+                  <i class="fa-regular fa-message mt-0.5 text-gray-400 group-hover:text-gray-600" aria-hidden="true"></i>
+                  <div class="min-w-0">
+                    <p class="truncate text-sm font-medium text-gray-800">Dịch câu tiếng Việt → Anh</p>
+                    <p class="truncate text-xs text-gray-500">Xin chào, bạn khoẻ không?</p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+        <!-- END: Sidebar -->
+
+        <!-- Chat column -->
+        <section class="flex-1 flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+
+          <!-- BEGIN: ChatHeader (sticky) -->
+          <header class="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-gray-200 bg-white/90 px-4 py-3 sm:px-6 backdrop-blur">
+            <div class="min-w-0">
+              <h1 class="truncate text-base sm:text-lg font-semibold tracking-tight">AI Chatbot</h1>
+              <p class="text-xs sm:text-sm text-gray-500">UI Kit • HTML + Tailwind (CDN)</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <!-- Mobile History Button -->
+              <label
+                for="mobile-history-toggle"
+                role="button"
+                tabindex="0"
+                aria-haspopup="dialog"
+                aria-controls="mobile-history-panel"
+                aria-label="Mở lịch sử chat"
+                class="lg:hidden inline-flex shrink-0 items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
+                <i class="fa-regular fa-clock" aria-hidden="true"></i>
+                <span class="hidden sm:inline">Lịch sử</span>
+              </label>
+
+              <!-- Desktop History Button (right, desktop only) -->
+              <label
+                for="desktop-history-toggle"
+                role="button"
+                tabindex="0"
+                aria-label="Ẩn/Hiện lịch sử chat"
+                class="desktop-history-btn hidden lg:inline-flex shrink-0 items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
+                <i class="fa-regular fa-rectangle-list" aria-hidden="true"></i>
+                <span class="hidden xl:inline">Lịch sử</span>
+              </label>
+
+
+              <!-- BEGIN: Settings Menu (Dropdown, không JS) -->
+              <div class="relative">
+                <input id="settings-toggle" type="checkbox" class="peer sr-only" aria-hidden="true" />
+                <label
+                  for="settings-toggle"
+                  role="button"
+                  tabindex="0"
+                  aria-label="Mở cài đặt"
+                  aria-haspopup="menu"
+                  aria-controls="settings-menu"
+                  class="inline-flex shrink-0 items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                >
+                  <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                  <span class="hidden sm:inline">Cài đặt</span>
+                </label>
+
+                <div
+                  id="settings-menu"
+                  role="menu"
+                  aria-label="Cài đặt ứng dụng"
+                  class="pointer-events-none absolute left-1/2 z-30 mt-2 w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-lg border border-gray-200 bg-white opacity-0 shadow-lg outline-none transition peer-checked:pointer-events-auto peer-checked:opacity-100 sm:left-auto sm:right-0 sm:w-80 sm:translate-x-0"
+                >
+                  <div class="max-h-[60vh] overflow-y-auto p-3 sm:p-4">
+                    <h2 class="mb-3 text-sm font-semibold text-gray-800">Cài đặt</h2>
+                    <div class="space-y-2">
+                      <div class="flex items-center justify-between rounded-md border border-gray-200 p-3">
+                        <div class="min-w-0">
+                          <p class="text-sm font-medium text-gray-800">Giọng điệu AI</p>
+                          <p class="text-xs text-gray-500">Trung lập (mặc định)</p>
+                        </div>
+                        <span class="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-700">Balanced</span>
+                      </div>
+                      <div class="flex items-center justify-between rounded-md border border-gray-200 p-3">
+                        <div class="min-w-0">
+                          <p class="text-sm font-medium text-gray-800">Hiển thị thời gian</p>
+                          <p class="text-xs text-gray-500">Trong bong bóng tin nhắn</p>
+                        </div>
+                        <span class="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-700">Bật</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END: Settings Menu -->
+            </div>
+          </header>
+          <!-- END: ChatHeader -->
+
+          <!-- BEGIN: ChatBody (scrollable) -->
+          <div class="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6" role="log" aria-live="polite" aria-relevant="additions text">
+            <ol role="list" class="space-y-4">
+              <!-- BEGIN: MessageBubble (AI) -->
+              <li role="listitem" class="flex items-start gap-3">
+                <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <article class="relative pt-2 pr-8 max-w-[85%] sm:max-w-[75%]">
+                  <input id="copy-ai-1" type="checkbox" class="peer sr-only" aria-hidden="true" />
+                  <label
+                    for="copy-ai-1"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Mở panel sao chép"
+                    aria-controls="copy-panel-ai-1"
+                    class="absolute right-2 top-0 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  >
+                    <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                    <span class="sr-only">Sao chép nội dung</span>
+                  </label>
+                  <div
+                    id="copy-panel-ai-1"
+                    role="dialog"
+                    aria-modal="false"
+                    aria-label="Sao chép nội dung"
+                    class="pointer-events-none absolute right-0 top-8 z-20 w-64 rounded-md border border-gray-200 bg-white p-3 text-xs text-gray-700 shadow-lg opacity-0 transition peer-checked:pointer-events-auto peer-checked:opacity-100"
+                  >
+                    <p class="mb-2 text-[11px] text-gray-500">Chọn và copy nội dung:</p>
+                    <textarea readonly class="w-full resize-none rounded border border-gray-200 bg-gray-50 p-2 text-xs leading-5">Xin chào! Mình là trợ lý AI. Mình có thể giúp gì cho bạn hôm nay?</textarea>
+                  </div>
+                  <div class="rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm">
+                    <p>Xin chào! Mình là trợ lý AI. Mình có thể giúp gì cho bạn hôm nay?</p>
+                  </div>
+                  <p class="mt-1 text-xs text-gray-500">AI • 09:30</p>
+                </article>
+              </li>
+              <!-- END: MessageBubble (AI) -->
+
+              <!-- BEGIN: MessageBubble (User) -->
+              <li role="listitem" class="flex justify-end">
+                <article class="relative pt-2 pr-8 max-w-[85%] sm:max-w-[70%] text-right">
+                  <input id="copy-user-1" type="checkbox" class="peer sr-only" aria-hidden="true" />
+                  <label
+                    for="copy-user-1"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Mở panel sao chép"
+                    aria-controls="copy-panel-user-1"
+                    class="absolute right-2 top-0 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  >
+                    <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                    <span class="sr-only">Sao chép nội dung</span>
+                  </label>
+                  <div
+                    id="copy-panel-user-1"
+                    role="dialog"
+                    aria-modal="false"
+                    aria-label="Sao chép nội dung"
+                    class="pointer-events-none absolute right-0 top-8 z-20 w-64 rounded-md border border-gray-200 bg-white p-3 text-xs text-gray-700 shadow-lg opacity-0 transition peer-checked:pointer-events-auto peer-checked:opacity-100"
+                  >
+                    <p class="mb-2 text-[11px] text-gray-500">Chọn và copy nội dung:</p>
+                    <textarea readonly class="w-full resize-none rounded border border-gray-200 bg-gray-50 p-2 text-xs leading-5">Hãy tóm tắt bảng số liệu dưới đây và cho mình gợi ý.</textarea>
+                  </div>
+                  <div class="inline-block rounded-2xl rounded-tr-md bg-blue-500 px-4 py-3 text-sm font-medium text-white shadow-sm">
+                    <p>Hãy tóm tắt bảng số liệu dưới đây và cho mình gợi ý.</p>
+                  </div>
+                  <p class="mt-1 text-right text-xs text-gray-500">Bạn • 09:31</p>
+                </article>
+              </li>
+              <!-- END: MessageBubble (User) -->
+
+              <!-- BEGIN: MessageBubble (AI - Table) -->
+              <li role="listitem" class="flex items-start gap-3">
+                <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <article class="max-w-[95%] sm:max-w-[85%]">
+                  <div class="rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm">
+                    <p class="mb-3">Dưới đây là bảng tóm tắt theo quý. Điểm đáng chú ý: Q2 tăng mạnh, Q3 giảm nhẹ.</p>
+                    <div class="overflow-x-auto">
+                      <table class="min-w-full text-left text-sm text-gray-800">
+                        <caption class="sr-only">Bảng số liệu doanh thu theo quý</caption>
+                        <thead class="bg-gray-50 text-gray-600">
+                          <tr>
+                            <th scope="col" class="px-3 py-2 font-semibold">Quý</th>
+                            <th scope="col" class="px-3 py-2 font-semibold">Doanh thu</th>
+                            <th scope="col" class="px-3 py-2 font-semibold">Tăng trưởng</th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                          <tr>
+                            <th scope="row" class="px-3 py-2 font-medium text-gray-900">Q1</th>
+                            <td class="px-3 py-2">$120,000</td>
+                            <td class="px-3 py-2 text-green-600">+5%</td>
+                          </tr>
+                          <tr class="bg-white/50">
+                            <th scope="row" class="px-3 py-2 font-medium text-gray-900">Q2</th>
+                            <td class="px-3 py-2">$165,000</td>
+                            <td class="px-3 py-2 text-green-600">+37.5%</td>
+                          </tr>
+                          <tr>
+                            <th scope="row" class="px-3 py-2 font-medium text-gray-900">Q3</th>
+                            <td class="px-3 py-2">$150,000</td>
+                            <td class="px-3 py-2 text-red-600">-9.1%</td>
+                          </tr>
+                          <tr class="bg-white/50">
+                            <th scope="row" class="px-3 py-2 font-medium text-gray-900">Q4</th>
+                            <td class="px-3 py-2">$172,000</td>
+                            <td class="px-3 py-2 text-green-600">+14.7%</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Actions: download CSV (UI only) -->
+                    <div class="mt-3 flex flex-wrap items-center gap-2">
+                      <a href="#" download="table-summary.csv" role="button" aria-label="Tải bảng dạng CSV" class="inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-300 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                        <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+                        <span>Tải CSV</span>
+                      </a>
+                    </div>
+                    <p class="mt-3">Gợi ý: Tập trung tiếp thị Q3 để ổn định đà tăng; duy trì ngân sách cho kênh hiệu quả nhất ở Q2.</p>
+                  </div>
+                  <p class="mt-1 text-xs text-gray-500">AI • 09:32</p>
+                </article>
+              </li>
+              <!-- END: MessageBubble (AI - Table) -->
+
+              <!-- BEGIN: MessageBubble (AI - Ảnh + mô tả) -->
+              <li role="listitem" class="flex items-start gap-3">
+                <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <article class="max-w-[95%] sm:max-w-[85%]">
+                  <div class="rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm">
+                    <p class="mb-3">Đây là ảnh minh họa sản phẩm. Nhận xét: phối màu hài hoà, chữ rõ ràng.</p>
+                    <figure>
+                      <img
+                        src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1280&auto=format&fit=crop"
+                        alt="Ảnh minh hoạ đồng hồ thông minh đặt trên nền gỗ"
+                        class="h-auto w-full rounded-lg border border-gray-200"
+                        loading="lazy"
+                      />
+                      <figcaption class="mt-2 text-xs text-gray-600">Nguồn: Unsplash (mẫu minh họa)</figcaption>
+                    </figure>
+                    <!-- Actions: download image (UI only) -->
+                    <div class="mt-3 flex flex-wrap items-center gap-2">
+                      <a href="#" download="image.jpg" role="button" aria-label="Tải ảnh" class="inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-300 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                        <i class="fa-solid fa-download" aria-hidden="true"></i>
+                        <span>Tải ảnh</span>
+                      </a>
+                    </div>
+                  </div>
+                  <p class="mt-1 text-xs text-gray-500">AI • 09:33</p>
+                </article>
+              </li>
+              <!-- END: MessageBubble (AI - Ảnh + mô tả) -->
+            </ol>
+          </div>
+          <!-- END: ChatBody -->
+
+          <!-- BEGIN: InputBar -->
+          <footer class="border-t border-gray-200 bg-white/90 px-4 py-3 sm:px-6">
+            <form action="#" aria-label="Gửi tin nhắn" class="space-y-2">
+              <!-- Balanced pill input group (textarea auto-grow 1→10 rows, no JS) -->
+              <div role="group" aria-label="Thanh soạn tin" aria-describedby="input-hint" class="grid grid-cols-[auto_1fr_auto] items-end gap-1.5 sm:gap-2 rounded-3xl ring-1 ring-inset ring-gray-200 bg-gray-50/80 px-1.5 sm:px-2 py-1.5 shadow-sm transition-colors focus-within:ring-2 focus-within:ring-blue-500 hover:ring-gray-300 min-h-[48px]">
+                <!-- Upload file (label + input[type=file]) -->
+                <div class="relative">
+                  <input id="file-input" type="file" class="sr-only" />
+                  <label
+                    for="file-input"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Tải lên tệp"
+                    class="inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-white text-gray-600 ring-1 ring-inset ring-gray-200 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  >
+                    <i class="fa-solid fa-paperclip" aria-hidden="true"></i>
+                    <span class="sr-only">Chọn tệp từ máy</span>
+                  </label>
+                </div>
+
+                <!-- Textarea input -->
+                <div class="min-w-0 flex-1">
+                  <label for="message" class="sr-only">Nội dung tin nhắn</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="1"
+                    placeholder="Viết tin nhắn..."
+                    aria-label="Nội dung tin nhắn"
+                    class="block w-full bg-transparent border-0 px-2 py-2 text-sm leading-6 placeholder:text-gray-500 focus:outline-none focus:ring-0 overflow-y-auto resize-none"
+                    style="field-sizing: content; min-height: 1lh; max-height: 10lh;"
+                  ></textarea>
+                </div>
+
+                <!-- Send button -->
+                <div class="flex items-center">
+                  <button
+                    type="submit"
+                    aria-label="Gửi tin nhắn"
+                    class="inline-flex h-10 sm:h-11 items-center gap-2 rounded-full bg-blue-600 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 active:scale-[0.98] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  >
+                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                    <span class="hidden sm:inline">Gửi</span>
+                  </button>
+                </div>
+              </div>
+
+              <p id="input-hint" class="hidden text-xs text-gray-500 sm:block">Mẹo: Nhấn Enter để gửi, Shift+Enter để xuống dòng.</p>
+            </form>
+          </footer>
+          <!-- END: InputBar -->
+
+        </section>
+
+        <!-- BEGIN: Mobile History Drawer (không JS) -->
+        <div class="lg:hidden">
+          <input id="mobile-history-toggle" type="checkbox" class="peer sr-only" aria-hidden="true" />
+
+          <!-- Backdrop -->
+          <label for="mobile-history-toggle" class="pointer-events-none fixed inset-0 z-40 bg-black/40 opacity-0 transition peer-checked:pointer-events-auto peer-checked:opacity-100" aria-hidden="true"></label>
+
+          <!-- Panel -->
+          <aside id="mobile-history-panel" role="dialog" aria-modal="true" aria-label="Lịch sử chat" class="fixed inset-y-0 left-0 z-50 w-[92%] max-w-xs translate-x-[-100%] overflow-hidden rounded-r-xl border-r border-gray-200 bg-white shadow-xl transition-transform duration-200 ease-out peer-checked:translate-x-0">
+            <div class="flex items-center justify-between border-b border-gray-200 px-4 py-3">
+              <div>
+                <h2 class="text-sm font-semibold text-gray-800">Lịch sử chat</h2>
+                <p class="text-xs text-gray-500">Các đoạn hội thoại gần đây</p>
+              </div>
+              <label for="mobile-history-toggle" role="button" aria-label="Đóng lịch sử" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-gray-700 hover:bg-gray-50">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+              </label>
+            </div>
+            <div class="max-h-[80vh] overflow-y-auto p-3 sm:p-4">
+              <ul role="list" class="space-y-2" aria-label="Danh sách hội thoại">
+                <li>
+                  <a href="#" aria-current="page" class="group flex items-start gap-3 rounded-md border border-transparent px-3 py-2 hover:border-gray-200 hover:bg-gray-50 aria-[current=page]:border-gray-200 aria-[current=page]:bg-gray-50">
+                    <i class="fa-regular fa-message mt-0.5 text-gray-400 group-hover:text-gray-600" aria-hidden="true"></i>
+                    <div class="min-w-0">
+                      <p class="truncate text-sm font-medium text-gray-800">Tóm tắt tài liệu PDF</p>
+                      <p class="truncate text-xs text-gray-500">Bạn có thể tóm tắt file này không?</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="group flex items-start gap-3 rounded-md border border-transparent px-3 py-2 hover:border-gray-200 hover:bg-gray-50">
+                    <i class="fa-regular fa-message mt-0.5 text-gray-400 group-hover:text-gray-600" aria-hidden="true"></i>
+                    <div class="min-w-0">
+                      <p class="truncate text-sm font-medium text-gray-800">Sinh kế hoạch học tập</p>
+                      <p class="truncate text-xs text-gray-500">Môn: FE, thời lượng: 4 tuần</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="group flex items-start gap-3 rounded-md border border-transparent px-3 py-2 hover:border-gray-200 hover:bg-gray-50">
+                    <i class="fa-regular fa-message mt-0.5 text-gray-400 group-hover:text-gray-600" aria-hidden="true"></i>
+                    <div class="min-w-0">
+                      <p class="truncate text-sm font-medium text-gray-800">Dịch câu tiếng Việt → Anh</p>
+                      <p class="truncate text-xs text-gray-500">Xin chào, bạn khoẻ không?</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+        <!-- END: Mobile History Drawer -->
+
+      </div>
+    </main>
+    <!-- END: ChatContainer -->
+
+    <!-- BEGIN: Notes (cách tuỳ chỉnh nhanh) -->
+    <!--
+      Component: Button
+      - Dùng data-variant: primary | secondary
+      - Dùng data-size: sm | md | lg
+      - Ví dụ:
+
+        <button data-variant="primary" data-size="lg" class="inline-flex items-center gap-2 rounded-md font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
+                data-[variant=primary]:bg-blue-600 data-[variant=primary]:text-white hover:data-[variant=primary]:bg-blue-700
+                data-[variant=secondary]:bg-white data-[variant=secondary]:text-gray-900 data-[variant=secondary]:ring-1 data-[variant=secondary]:ring-gray-300 hover:data-[variant=secondary]:bg-gray-50
+                data-[size=sm]:px-2.5 data-[size=sm]:py-1.5 data-[size=md]:px-3 data-[size=md]:py-2 data-[size=lg]:px-4 data-[size=lg]:py-2.5">
+          <i class="fa-solid fa-star" aria-hidden="true"></i>
+          <span>Nổi bật</span>
+        </button>
+
+      Component: MessageBubble
+      - User: bg-blue-500 text-white, align phải (parent: flex justify-end)
+      - AI: bg-gray-100 text-gray-800, align trái (parent: flex justify-start)
+      - Thêm timestamp: <p class="mt-1 text-xs text-gray-500">AI • 09:30</p>
+
+      ChatContainer
+      - Mobile full-width; Desktop full màn hình; sidebar lịch sử bên trái (lg+).
+      - Header sticky: .sticky .top-0 + nền mờ .bg-white/90 .backdrop-blur
+
+      Sidebar (Lịch sử chat)
+      - Hiển thị bên trái trên desktop: grid-cols-1 lg:grid-cols-[320px_1fr].
+      - Ẩn trên mobile: .hidden lg:flex; phần chat vẫn full-width.
+
+      Menu (Dropdown - Cài đặt)
+      - Checkbox + .peer-checked mở/đóng không cần JS.
+
+      Mobile History Drawer
+      - Nút “Lịch sử” (mobile) mở panel lịch sử (checkbox #mobile-history-toggle).
+    -->
+    <!-- END: Notes -->
+  </body>
+</html>
