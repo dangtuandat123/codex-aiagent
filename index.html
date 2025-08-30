@@ -33,12 +33,11 @@
           transition: all 300ms ease;
         }
 
-        /* Button icon rotates when sidebar hidden */
-        .desktop-history-btn i { transition: transform 200ms ease; }
-        #desktop-history-toggle:checked ~ section .desktop-history-btn i {
-          transform: rotate(180deg);
-        }
+        
       }
+
+      /* Image Lightbox (CSS-only via :target) */
+      .lightbox:target { opacity: 1 !important; pointer-events: auto !important; }
     </style>
   </head>
   <body class="bg-white text-gray-900 antialiased">
@@ -178,13 +177,13 @@
 
           <!-- BEGIN: ChatBody (scrollable) -->
           <div class="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6" role="log" aria-live="polite" aria-relevant="additions text">
-            <ol role="list" class="space-y-4">
+            <ol role="list" class="space-y-4 max-w-[70%] mx-auto">
               <!-- BEGIN: MessageBubble (AI) -->
               <li role="listitem" class="flex items-start gap-3">
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
                   <i class="fa-solid fa-robot"></i>
                 </div>
-                <article class="relative pt-2 pr-8 max-w-[85%] sm:max-w-[75%]">
+              <article class="relative pt-2 pr-8 max-w-[70%]">
                   <input id="copy-ai-1" type="checkbox" class="peer sr-only" aria-hidden="true" />
                   <label
                     for="copy-ai-1"
@@ -217,7 +216,7 @@
 
               <!-- BEGIN: MessageBubble (User) -->
               <li role="listitem" class="flex justify-end">
-                <article class="relative pt-2 pr-8 max-w-[85%] sm:max-w-[70%] text-right">
+                <article class="relative pt-2 pr-8 max-w-[70%] text-right">
                   <input id="copy-user-1" type="checkbox" class="peer sr-only" aria-hidden="true" />
                   <label
                     for="copy-user-1"
@@ -253,7 +252,7 @@
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
                   <i class="fa-solid fa-robot"></i>
                 </div>
-                <article class="max-w-[95%] sm:max-w-[85%]">
+                <article class="max-w-[70%]">
                   <div class="rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm">
                     <p class="mb-3">Dưới đây là bảng tóm tắt theo quý. Điểm đáng chú ý: Q2 tăng mạnh, Q3 giảm nhẹ.</p>
                     <div class="overflow-x-auto">
@@ -309,9 +308,10 @@
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
                   <i class="fa-solid fa-robot"></i>
                 </div>
-                <article class="max-w-[95%] sm:max-w-[85%]">
+                <article class="max-w-[70%]">
                   <div class="rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm">
                     <p class="mb-3">Đây là ảnh minh họa sản phẩm. Nhận xét: phối màu hài hoà, chữ rõ ràng.</p>
+                    <div class="relative group">
                     <figure>
                       <img
                         src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1280&auto=format&fit=crop"
@@ -320,7 +320,9 @@
                         loading="lazy"
                       />
                       <figcaption class="mt-2 text-xs text-gray-600">Nguồn: Unsplash (mẫu minh họa)</figcaption>
+                      <a href="#img-zoom-1" aria-label="Phóng to ảnh" class="absolute inset-0 cursor-zoom-in"></a>
                     </figure>
+                    </div>
                     <!-- Actions: download image (UI only) -->
                     <div class="mt-3 flex flex-wrap items-center gap-2">
                       <a href="#" download="image.jpg" role="button" aria-label="Tải ảnh" class="inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-300 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
@@ -339,7 +341,7 @@
 
           <!-- BEGIN: InputBar -->
           <footer class="border-t border-gray-200 bg-white/90 px-4 py-3 sm:px-6">
-            <form action="#" aria-label="Gửi tin nhắn" class="space-y-2">
+            <form action="#" aria-label="Gửi tin nhắn" class="space-y-2 max-w-[70%] mx-auto">
               <!-- Balanced pill input group (textarea auto-grow 1→10 rows, no JS) -->
               <div role="group" aria-label="Thanh soạn tin" aria-describedby="input-hint" class="grid grid-cols-[auto_1fr_auto] items-end gap-1.5 sm:gap-2 rounded-3xl ring-1 ring-inset ring-gray-200 bg-gray-50/80 px-1.5 sm:px-2 py-1.5 shadow-sm transition-colors focus-within:ring-2 focus-within:ring-blue-500 hover:ring-gray-300 min-h-[48px]">
                 <!-- Upload file (label + input[type=file]) -->
@@ -376,9 +378,9 @@
                   <button
                     type="submit"
                     aria-label="Gửi tin nhắn"
-                    class="inline-flex h-10 sm:h-11 items-center gap-2 rounded-full bg-blue-600 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 active:scale-[0.98] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    class="group relative inline-flex h-10 sm:h-11 items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-5 text-sm font-medium text-white shadow-md ring-1 ring-blue-500/20 transition-all duration-200 ease-out hover:from-blue-600 hover:to-indigo-700 hover:shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                   >
-                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                    <i class="fa-solid fa-paper-plane transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true"></i>
                     <span class="hidden sm:inline">Gửi</span>
                   </button>
                 </div>
@@ -447,6 +449,18 @@
       </div>
     </main>
     <!-- END: ChatContainer -->
+
+    <!-- BEGIN: Image Lightbox (CSS-only :target) -->
+    <div id="img-zoom-1" class="lightbox fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 opacity-0 pointer-events-none transition">
+      <a href="#" class="absolute inset-0" aria-label="Đóng ảnh phóng to"></a>
+      <figure class="relative">
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1280&auto=format&fit=crop" alt="Ảnh phóng to" class="max-h-[85vh] max-w-[90vw] rounded-lg border border-white/10 shadow-2xl" />
+        <a href="#" role="button" aria-label="Đóng" class="absolute -top-3 -right-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-700 shadow">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </a>
+      </figure>
+    </div>
+    <!-- END: Image Lightbox -->
 
     <!-- BEGIN: Notes (cách tuỳ chỉnh nhanh) -->
     <!--
