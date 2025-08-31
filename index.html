@@ -46,10 +46,12 @@
         text-align: right;
         color: rgb(148 163 184 / 0.7); /* slate-400/70 */
         border-right: 1px solid rgba(100,116,139,0.5); /* slate-600/50 */
-        padding-right: 0.75rem; /* pr-3 */
+        padding-right: 1rem; /* pr-4: tạo khoảng cách với border-right */
         user-select: none;
       }
       .hljs-ln-code { padding-left: 0.75rem; /* pl-3 */ }
+      /* Tidy base cell padding (vertical only) */
+      .hljs-ln td { padding: 2px 0; }
 
       /* Typing indicator (three bouncing dots) */
       .typing-dots { display: inline-flex; align-items: center; gap: 0.35rem; }
@@ -449,7 +451,7 @@ if __name__ == "__main__":
                         </div>
                       </div>
                     </div>
-                    <div class="bg-gradient-to-b from-slate-950 to-slate-900">
+                    <div class="bg-gradient-to-b from-slate-950 to-slate-900 max-h-[250px] overflow-auto">
                       <pre aria-label="Đoạn mã Python" class="w-full overflow-x-auto p-3 font-mono text-[13px] leading-6 text-slate-100"><code class="language-python"># Tính tổng dãy số và in kết quả
 def sum_numbers(nums: list[int]) -> int:
     return sum(nums)
