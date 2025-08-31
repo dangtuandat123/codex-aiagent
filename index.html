@@ -65,6 +65,16 @@
         0%, 80%, 100% { transform: translateY(0); opacity: .6; }
         40% { transform: translateY(-4px); opacity: 1; }
       }
+
+      /* Gemini-like input bar interactions (CSS-only) */
+      .gemini-bar { position: relative; }
+      .gemini-bar .btn-send { opacity: .45; pointer-events: none; transform: translateX(0); transition: opacity .15s ease, transform .15s ease; }
+      .gemini-bar .btn-mic  { opacity: .9;  transition: opacity .15s ease, transform .15s ease; }
+      .gemini-bar:has(textarea:not(:placeholder-shown)) .btn-send { opacity: 1; pointer-events: auto; }
+      .gemini-bar:has(textarea:not(:placeholder-shown)) .btn-mic  { opacity: 0; pointer-events: none; transform: scale(.95); }
+      .gemini-textarea { scrollbar-width: thin; }
+      .gemini-textarea::-webkit-scrollbar { width: 6px; }
+      .gemini-textarea::-webkit-scrollbar-thumb { background: rgb(209 213 219); border-radius: 999px; }
     </style>
   </head>
   <body class="bg-white text-gray-900 antialiased">
@@ -204,13 +214,13 @@
 
           <!-- BEGIN: ChatBody (scrollable) -->
           <div class="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6" role="log" aria-live="polite" aria-relevant="additions text">
-            <ol role="list" class="space-y-4 max-w-[70%] mx-auto">
+            <ol role="list" class="space-y-4 max-w-[55%] mx-auto">
               <!-- BEGIN: MessageBubble (AI) -->
               <li role="listitem" class="flex items-start gap-3">
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
                   <i class="fa-solid fa-robot"></i>
                 </div>
-              <article class="relative pt-2 pr-8 max-w-[70%]">
+              <article class="relative pt-2 pr-8 max-w-full">
                   <input id="copy-ai-1" type="checkbox" class="peer sr-only" aria-hidden="true" />
                   <label
                     for="copy-ai-1"
@@ -243,7 +253,7 @@
 
               <!-- BEGIN: MessageBubble (User) -->
               <li role="listitem" class="flex justify-end">
-                <article class="relative pt-2 pr-8 max-w-[70%] text-right">
+                <article class="relative pt-2 pr-8 max-w-full text-right">
                   <input id="copy-user-1" type="checkbox" class="peer sr-only" aria-hidden="true" />
                   <label
                     for="copy-user-1"
@@ -279,7 +289,7 @@
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
                   <i class="fa-solid fa-robot"></i>
                 </div>
-                <article class="max-w-[70%]">
+                <article class="max-w-full">
                   <div class="rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm">
                     <p class="mb-3">Dưới đây là bảng tóm tắt theo quý. Điểm đáng chú ý: Q2 tăng mạnh, Q3 giảm nhẹ.</p>
                     <div class="overflow-x-auto">
@@ -335,7 +345,7 @@
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
                   <i class="fa-solid fa-robot"></i>
                 </div>
-                <article class="max-w-[70%]">
+                <article class="max-w-full">
                   <div class="rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm">
                     <p class="mb-3">Đây là ảnh minh họa sản phẩm. Nhận xét: phối màu hài hoà, chữ rõ ràng.</p>
                     <div class="relative group">
@@ -367,7 +377,7 @@
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
                   <i class="fa-solid fa-robot"></i>
                 </div>
-                <article class="max-w-[70%]">
+                <article class="max-w-full">
                   <div class="rounded-2xl rounded-tl-md bg-white text-gray-800 shadow-sm ring-1 ring-gray-200 overflow-hidden">
                     <div class="flex items-center justify-between gap-3 border-b border-gray-200 px-3 py-2">
                       <div class="flex items-center gap-2 text-xs font-medium text-gray-700">
@@ -466,7 +476,7 @@ if __name__ == "__main__":
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
                   <i class="fa-solid fa-robot"></i>
                 </div>
-                <article class="max-w-[70%]">
+                <article class="max-w-full">
                   <div class="rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm" aria-live="polite">
                     <span class="sr-only">AI đang nhập...</span>
                     <span aria-hidden="true" class="typing-dots">
@@ -484,11 +494,27 @@ if __name__ == "__main__":
           <!-- END: ChatBody -->
 
           <!-- BEGIN: InputBar -->
-          <footer class="border-t border-gray-200 bg-white/90 px-4 py-3 sm:px-6">
+          <footer class="border-t border-gray-100 bg-white/90 px-3 py-2 sm:px-5">
             <form action="#" aria-label="Gửi tin nhắn" class="space-y-2 max-w-[70%] mx-auto">
-              <!-- Balanced pill input group (textarea auto-grow 1→10 rows, no JS) -->
-              <div role="group" aria-label="Thanh soạn tin" aria-describedby="input-hint" class="grid grid-cols-[auto_1fr_auto] items-end gap-1.5 sm:gap-2 rounded-3xl ring-1 ring-inset ring-gray-200 bg-gray-50/80 px-1.5 sm:px-2 py-1.5 shadow-sm transition-colors focus-within:ring-2 focus-within:ring-blue-500 hover:ring-gray-300 min-h-[48px]">
-                <!-- Upload file (label + input[type=file]) -->
+              <!-- Quick suggestions (Gemini-like chips) -->
+              <div class="-mx-1.5 flex flex-wrap items-center gap-2 px-1.5">
+                <button type="button" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                  <i class="fa-regular fa-lightbulb text-gray-500" aria-hidden="true"></i>
+                  Gợi ý chủ đề
+                </button>
+                <button type="button" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                  <i class="fa-regular fa-file-lines text-gray-500" aria-hidden="true"></i>
+                  Tóm tắt tài liệu
+                </button>
+                <button type="button" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                  <i class="fa-regular fa-image text-gray-500" aria-hidden="true"></i>
+                  Phân tích hình ảnh
+                </button>
+              </div>
+
+              <!-- Gemini-like pill input group (textarea auto-grow 1→10 rows, CSS-only interactions) -->
+              <div role="group" aria-label="Thanh soạn tin" aria-describedby="input-hint" class="gemini-bar grid grid-cols-[auto_1fr_auto] items-end gap-1 sm:gap-1.5 rounded-[2rem] ring-1 ring-inset ring-gray-100 bg-white/70 backdrop-blur px-1 sm:px-1.5 py-1 shadow-sm transition-colors focus-within:ring-2 focus-within:ring-blue-500 hover:ring-gray-200 min-h-[48px]">
+                <!-- Upload file -->
                 <div class="relative">
                   <input id="file-input" type="file" class="sr-only" />
                   <label
@@ -496,9 +522,9 @@ if __name__ == "__main__":
                     role="button"
                     tabindex="0"
                     aria-label="Tải lên tệp"
-                    class="inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-white text-gray-600 ring-1 ring-inset ring-gray-200 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    class="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white text-gray-600 ring-1 ring-inset ring-gray-100 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                   >
-                    <i class="fa-solid fa-paperclip" aria-hidden="true"></i>
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i>
                     <span class="sr-only">Chọn tệp từ máy</span>
                   </label>
                 </div>
@@ -510,27 +536,30 @@ if __name__ == "__main__":
                     id="message"
                     name="message"
                     rows="1"
-                    placeholder="Viết tin nhắn..."
+                    placeholder="Hãy hỏi mình bất kỳ điều gì…"
                     aria-label="Nội dung tin nhắn"
-                    class="block w-full bg-transparent border-0 px-2 py-2 text-sm leading-6 placeholder:text-gray-500 focus:outline-none focus:ring-0 overflow-y-auto resize-none"
+                    class="gemini-textarea block w-full bg-transparent border-0 px-1.5 py-1.5 text-[15px] leading-5 placeholder:text-gray-500 focus:outline-none focus:ring-0 overflow-y-auto resize-none"
                     style="field-sizing: content; min-height: 1lh; max-height: 10lh;"
                   ></textarea>
                 </div>
 
-                <!-- Send button -->
-                <div class="flex items-center">
+                <!-- Mic / Send buttons (CSS toggled) -->
+                <div class="flex items-center pr-0.5 sm:pr-1">
+                  <button type="button" aria-label="Ghi âm (demo)" class="btn-mic inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white text-gray-700 ring-1 ring-inset ring-gray-100 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                    <i class="fa-solid fa-microphone" aria-hidden="true"></i>
+                  </button>
                   <button
                     type="submit"
                     aria-label="Gửi tin nhắn"
-                    class="group relative inline-flex h-10 sm:h-11 items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-5 text-sm font-medium text-white shadow-md ring-1 ring-blue-500/20 transition-all duration-200 ease-out hover:from-blue-600 hover:to-indigo-700 hover:shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                    class="btn-send ml-1.5 inline-flex h-9 sm:h-10 items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-3.5 sm:px-4 text-sm font-medium text-white shadow-md ring-1 ring-blue-500/20 transition-all duration-200 ease-out hover:from-blue-600 hover:to-indigo-700 hover:shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                   >
-                    <i class="fa-solid fa-paper-plane transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true"></i>
+                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
                     <span class="hidden sm:inline">Gửi</span>
                   </button>
                 </div>
               </div>
 
-              <p id="input-hint" class="hidden text-xs text-gray-500 sm:block">Mẹo: Nhấn Enter để gửi, Shift+Enter để xuống dòng.</p>
+              <p id="input-hint" class="hidden text-xs text-gray-500 sm:block">Mẹo: Enter để gửi • Shift+Enter để xuống dòng.</p>
             </form>
           </footer>
           <!-- END: InputBar -->
