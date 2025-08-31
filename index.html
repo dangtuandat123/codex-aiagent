@@ -214,7 +214,7 @@
 
           <!-- BEGIN: ChatBody (scrollable) -->
           <div class="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6" role="log" aria-live="polite" aria-relevant="additions text">
-            <ol role="list" class="space-y-4 w-[min(55vw,100%)] mx-auto">
+            <ol role="list" class="space-y-4 w-full sm:w-[min(55vw,100%)] mx-auto">
               <!-- BEGIN: MessageBubble (AI) -->
               <li role="listitem" class="flex items-start gap-3">
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
@@ -233,10 +233,10 @@
                         tabindex="0"
                         aria-label="Mở panel sao chép"
                         aria-controls="copy-panel-ai-1"
-                        class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                        class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-600 ring-1 ring-inset ring-gray-200 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                       >
                         <i class="fa-regular fa-copy" aria-hidden="true"></i>
-                        <span>Sao chép</span>
+                        <span class="sr-only">Sao chép nội dung</span>
                       </label>
                       <div
                         id="copy-panel-ai-1"
@@ -270,10 +270,10 @@
                         tabindex="0"
                         aria-label="Mở panel sao chép"
                         aria-controls="copy-panel-user-1"
-                        class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                        class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-600 ring-1 ring-inset ring-gray-200 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                       >
                         <i class="fa-regular fa-copy" aria-hidden="true"></i>
-                        <span>Sao chép</span>
+                        <span class="sr-only">Sao chép nội dung</span>
                       </label>
                       <div
                         id="copy-panel-user-1"
@@ -503,7 +503,7 @@ if __name__ == "__main__":
 
           <!-- BEGIN: InputBar -->
           <footer class="border-t border-gray-100 bg-white/90 px-3 py-2 sm:px-5">
-            <form action="#" aria-label="Gửi tin nhắn" class="space-y-2 w-[min(55vw,100%)] mx-auto">
+            <form action="#" aria-label="Gửi tin nhắn" class="space-y-2 w-full sm:w-[min(55vw,100%)] mx-auto">
               <!-- Quick suggestions (Gemini-like chips) -->
               <div class="-mx-1.5 flex flex-wrap items-center gap-2 px-1.5">
                 <button type="button" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
