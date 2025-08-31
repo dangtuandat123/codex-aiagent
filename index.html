@@ -77,8 +77,8 @@
 
       /* ChatGPT-like input bar */
       .chatgpt-bar { position: relative; }
-      .chatgpt-bar .btn-send { opacity: .5; pointer-events: none; transition: opacity .15s ease, transform .15s ease; }
-      .chatgpt-bar:has(textarea:not(:placeholder-shown)) .btn-send { opacity: 1; pointer-events: auto; transform: none; }
+      .chatgpt-bar .btn-send { opacity: .5; pointer-events: none; }
+      .chatgpt-bar:has(textarea:not(:placeholder-shown)) .btn-send { opacity: 1; pointer-events: auto; }
       .chatgpt-textarea { scrollbar-width: thin; }
       .chatgpt-textarea::-webkit-scrollbar { width: 6px; }
       .chatgpt-textarea::-webkit-scrollbar-thumb { background: rgb(209 213 219); border-radius: 999px; }
@@ -505,10 +505,10 @@ if __name__ == "__main__":
           <footer class="border-t border-gray-100 bg-white/90 px-3 py-2 sm:px-5">
             <form action="#" aria-label="Gửi tin nhắn" class="space-y-2 w-full sm:w-[min(55vw,100%)] mx-auto">
               <!-- ChatGPT-like input group -->
-              <div role="group" aria-label="Thanh soạn tin" aria-describedby="input-hint" class="chatgpt-bar relative rounded-full ring-1 ring-inset ring-gray-200 bg-white/90 backdrop-blur px-3 py-2 shadow-sm transition-colors focus-within:ring-2 focus-within:ring-blue-500 min-h-[52px]">
+              <div role="group" aria-label="Thanh soạn tin" aria-describedby="input-hint" class="chatgpt-bar relative rounded-2xl ring-1 ring-inset ring-gray-200 bg-white/90 backdrop-blur px-3 py-2 shadow-sm transition-colors focus-within:ring-2 focus-within:ring-blue-500 min-h-[52px]">
                 <!-- Attachment button (left inside) -->
                 <input id="file-input" type="file" class="sr-only" />
-                <label for="file-input" role="button" tabindex="0" aria-label="Tải lên tệp" class="absolute left-2 bottom-2 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                <label for="file-input" role="button" tabindex="0" aria-label="Tải lên tệp" class="absolute left-2 top-1/2 -translate-y-1/2 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                   <i class="fa-solid fa-plus" aria-hidden="true"></i>
                   <span class="sr-only">Chọn tệp từ máy</span>
                 </label>
@@ -529,7 +529,7 @@ if __name__ == "__main__":
                 <button
                   type="submit"
                   aria-label="Gửi tin nhắn"
-                  class="btn-send absolute right-2 bottom-2 inline-flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md ring-1 ring-blue-500/20 transition-all duration-200 ease-out hover:from-blue-600 hover:to-indigo-700 hover:shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                  class="btn-send absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-9 w-9 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
                   <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
                 </button>
