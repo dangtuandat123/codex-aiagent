@@ -84,6 +84,116 @@
       .chatgpt-textarea { scrollbar-width: thin; }
       .chatgpt-textarea::-webkit-scrollbar { width: 6px; }
       .chatgpt-textarea::-webkit-scrollbar-thumb { background: rgb(209 213 219); border-radius: 999px; }
+
+      /* AI responding steps (EDA → Plan → Code → Test) */
+      .ai-steps { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+      .ai-step {
+        position: relative;
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        padding: 0.5rem 0.75rem; border-radius: 9999px;
+        font-size: 13px; line-height: 1.2;
+        background: #f1f5f9; /* slate-100 */
+        border: 1px solid #e2e8f0; /* gray-200 */
+        color: #475569; /* slate-600 */
+        opacity: 0.85;
+        animation: aiStepBlink 4s linear infinite;
+      }
+      .ai-step::after {
+        content: "";
+        position: absolute; top: 50%; right: -0.75rem; transform: translateY(-50%);
+        width: 32px; height: 2px; background: #e2e8f0; opacity: .9;
+        animation: aiStepLine 4s linear infinite;
+      }
+      .ai-step:nth-child(2) { animation-delay: 1s; }
+      .ai-step:nth-child(3) { animation-delay: 2s; }
+      .ai-step:nth-child(4) { animation-delay: 3s; }
+      .ai-step:nth-child(2)::after { animation-delay: 1s; }
+      .ai-step:nth-child(3)::after { animation-delay: 2s; }
+      .ai-step:nth-child(4)::after { animation-delay: 3s; }
+      .ai-step:last-child::after { display: none; }
+      @keyframes aiStepBlink {
+        0%, 100% { opacity: 0.85; background: #f1f5f9; border-color: #e2e8f0; box-shadow: none; }
+        20% { opacity: 1; background: #e0f2fe; border-color: #bae6fd; box-shadow: 0 0 0 2px rgba(59,130,246,0.15) inset; }
+      }
+      @keyframes aiStepLine {
+        0%, 100% { background: #e2e8f0; opacity: .9; }
+        20% { background: #60a5fa; opacity: 1; }
+      }
+      @media (max-width: 639px) {
+        .ai-steps { gap: 0.5rem; }
+        .ai-step { font-size: 12px; padding: 0.425rem 0.625rem; }
+        .ai-step::after { display: none; }
+      }
+
+      /* Sequential stepper (connected) */
+      .ai-seq { position: relative; }
+      .ai-seq .ai-line {
+        position: absolute; left: 2px; right: 2px; top: 12px; height: 3px;
+        background: #e2e8f0; border-radius: 9999px; overflow: hidden;
+      }
+      .ai-seq .ai-line::after {
+        content: ""; position: absolute; inset: 0; width: 0%;
+        background: linear-gradient(90deg, #60a5fa, #3b82f6);
+        animation: aiLineFill 8s linear infinite;
+      }
+      @keyframes aiLineFill { from { width: 0%; } to { width: 100%; } }
+      .ai-nodes { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 0; align-items: start; }
+      .ai-node { text-align: center; position: relative; padding-top: 0.25rem; }
+      .ai-dot {
+        position: relative; z-index: 1; margin: 0 auto 6px auto;
+        width: 16px; height: 16px; border-radius: 9999px;
+        background: #cbd5e1; border: 2px solid #ffffff; box-shadow: 0 0 0 1px #cbd5e1;
+        animation: aiDotPulse 8s linear infinite;
+      }
+      .ai-node:nth-child(2) .ai-dot { animation-delay: 2s; }
+      .ai-node:nth-child(3) .ai-dot { animation-delay: 4s; }
+      .ai-node:nth-child(4) .ai-dot { animation-delay: 6s; }
+      @keyframes aiDotPulse {
+        0%, 100% { transform: scale(1); background: #cbd5e1; box-shadow: 0 0 0 1px #cbd5e1; }
+        10% { transform: scale(1.15); background: #3b82f6; box-shadow: 0 0 0 1px #3b82f6, 0 0 0 6px rgba(59,130,246,.12); }
+      }
+      .ai-label { font-size: 12px; line-height: 1.2; color: #334155; font-weight: 500; }
+      @media (max-width: 639px) {
+        .ai-seq .ai-line { top: 12px; height: 3px; }
+        .ai-dot { width: 14px; height: 14px; }
+        .ai-label { font-size: 11px; }
+      }
+
+      /* New: Connected pill steps */
+      .ai-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+      .ai-chip {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        padding: 0.5rem 0.75rem; border-radius: 9999px;
+        font-size: 13px; line-height: 1.2; font-weight: 500;
+        background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155;
+        animation: aiChipState 8s linear infinite both;
+      }
+      .ai-flow .ai-chip { --delay: 0s; animation-delay: var(--delay); }
+      .ai-flow .ai-chip:nth-of-type(2) { --delay: 2s; }
+      .ai-flow .ai-chip:nth-of-type(3) { --delay: 4s; }
+      .ai-flow .ai-chip:nth-of-type(4) { --delay: 6s; }
+      .ai-chip .icon-wrap { position: relative; width: 18px; height: 18px; display: inline-block; }
+      .ai-chip .icon-wrap .icon-step,
+      .ai-chip .icon-wrap .icon-check {
+        position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      }
+      .ai-chip .icon-wrap .icon-step { opacity: .95; color: #334155; animation: aiChipIconStep 8s linear infinite both; animation-delay: var(--delay); }
+      .ai-chip .icon-wrap .icon-check { opacity: 0; color: #16a34a; animation: aiChipIconCheck 8s linear infinite both; animation-delay: var(--delay); }
+      @keyframes aiChipState {
+        0% { background: #f1f5f9; border-color: #e2e8f0; color: #334155; opacity: .95; }
+        5% { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; box-shadow: 0 0 0 2px rgba(59,130,246,0.10) inset, 0 2px 8px rgba(59,130,246,0.08); }
+        10%, 100% { background: #ecfdf5; border-color: #86efac; color: #065f46; box-shadow: 0 0 0 1px rgba(22,163,74,0.15) inset; }
+      }
+      @keyframes aiChipIconStep { 0% { opacity: .9; } 10%, 100% { opacity: 0; } }
+      @keyframes aiChipIconCheck { 0% { opacity: 0; transform: scale(.9); } 10%, 100% { opacity: 1; transform: scale(1); } }
+      .ai-join { width: 36px; height: 3px; border-radius: 9999px; background: #e2e8f0; position: relative; overflow: hidden; }
+      .ai-join::after { content: ""; position: absolute; inset: 0; width: 0%; background: #86efac; animation: aiJoinFill 8s linear infinite both; }
+      .ai-flow > .ai-join { --delay: 1s; }
+      .ai-flow > .ai-join:nth-of-type(2) { --delay: 3s; }
+      .ai-flow > .ai-join:nth-of-type(3) { --delay: 5s; }
+      .ai-join::after { animation-delay: var(--delay); }
+      @keyframes aiJoinFill { 0% { width: 0%; } 25%, 100% { width: 100%; } }
+      @media (max-width: 639px) { .ai-join { display: none; } .ai-chip { font-size: 12px; padding: 0.45rem 0.625rem; } }
     </style>
   </head>
   <body class="bg-white text-gray-900 antialiased">
@@ -614,6 +724,29 @@ print("5! =", factorial(5))
                 </article>
               </li>
               <!-- END: MessageBubble (AI - Code + Image) -->
+
+              <!-- BEGIN: AI Responding + Steps -->
+              <li role="listitem" class="flex items-start gap-3">
+                <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <article class="max-w-full flex-1" aria-live="polite">
+                  <div class="inline-flex items-center rounded-2xl rounded-tl-md bg-gray-100 px-3 py-2.5 text-sm text-gray-800 shadow-sm">
+                    <i class="fa-solid fa-wand-magic-sparkles text-blue-600" aria-hidden="true"></i>
+                    <span>AI đang phản hồi…</span>
+                  </div>
+                    <div class="mt-3 ai-flow" role="group" aria-label="Tiến trình AI">
+                    <div class="ai-chip"><span class="icon-wrap"><i class="icon-step fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i><i class="icon-check fa-solid fa-check" aria-hidden="true"></i></span><span>Phân tích EDA</span></div>
+                    <span class="ai-join" aria-hidden="true"></span>
+                    <div class="ai-chip"><span class="icon-wrap"><i class="icon-step fa-solid fa-list-check" aria-hidden="true"></i><i class="icon-check fa-solid fa-check" aria-hidden="true"></i></span><span>Lên kế hoạch</span></div>
+                    <span class="ai-join" aria-hidden="true"></span>
+                    <div class="ai-chip"><span class="icon-wrap"><i class="icon-step fa-solid fa-code" aria-hidden="true"></i><i class="icon-check fa-solid fa-check" aria-hidden="true"></i></span><span>Tạo code</span></div>
+                    <span class="ai-join" aria-hidden="true"></span>
+                    <div class="ai-chip"><span class="icon-wrap"><i class="icon-step fa-solid fa-square-check" aria-hidden="true"></i><i class="icon-check fa-solid fa-check" aria-hidden="true"></i></span><span>Kiểm tra</span></div>
+                    </div>
+                </article>
+              </li>
+              <!-- END: AI Responding + Steps -->
 
               <!-- BEGIN: TypingIndicator (AI đang nhập) -->
               <li role="listitem" class="flex items-start gap-3">
