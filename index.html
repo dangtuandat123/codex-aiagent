@@ -385,9 +385,9 @@
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
                   <i class="fa-solid fa-robot"></i>
                 </div>
-                <article class="max-w-full flex-1">
-                  <div class="rounded-2xl rounded-tl-md bg-white text-gray-800 shadow-sm ring-1 ring-gray-200 overflow-hidden">
-                    <div class="flex items-center justify-between gap-2 bg-slate-800 text-slate-100 px-3 py-2 border-b border-slate-700">
+                <article class="relative pt-2 max-w-full flex-1">
+                  <div class="rounded-2xl rounded-tl-md overflow-hidden shadow-sm">
+                    <div class="flex items-center justify-between gap-2 bg-slate-800 text-slate-100 px-4 py-2 border-b border-slate-700">
                       <div class="flex items-center gap-2 text-xs font-medium">
                         <i class="fa-brands fa-python text-blue-300" aria-hidden="true"></i>
                         <span>Python</span>
@@ -442,10 +442,8 @@ if __name__ == "__main__":
                         </div>
                       </div>
                     </div>
-                    <div class="bg-gradient-to-b from-slate-950 to-slate-900 rounded-b-2xl ring-1 ring-slate-800/50">
-                      <div class="flex font-mono text-[13px] leading-6">
-                       
-                        <pre aria-label="Đoạn mã Python" class="w-full overflow-x-auto p-4 font-mono text-[13px] leading-6 text-slate-100"><code class="language-python"># Tính tổng dãy số và in kết quả
+                    <div class="bg-gradient-to-b from-slate-950 to-slate-900">
+                      <pre aria-label="Đoạn mã Python" class="w-full overflow-x-auto p-4 font-mono text-[13px] leading-6 text-slate-100"><code class="language-python"># Tính tổng dãy số và in kết quả
 def sum_numbers(nums: list[int]) -> int:
     return sum(nums)
 
@@ -467,7 +465,6 @@ if __name__ == "__main__":
     print("Sum =", sum_numbers(nums))
     print("FizzBuzz:", ", ".join(fizzbuzz(16)))
 </code></pre>
-                      </div>
                     </div>
                   </div>
                   <p class="mt-1 text-xs text-gray-500">AI • 09:34</p>
