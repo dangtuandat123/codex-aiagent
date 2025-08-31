@@ -137,7 +137,7 @@
         <section class="flex-1 flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden peer-checked:lg:-ml-4">
 
           <!-- BEGIN: ChatHeader (sticky) -->
-          <header class="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-gray-200 bg-white/90 px-4 py-3 sm:px-6 backdrop-blur">
+          <header class="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-gray-200 bg-white/90 px-3 py-2 sm:px-4 backdrop-blur">
             <div class="min-w-0">
               <h1 class="truncate text-base sm:text-lg font-semibold tracking-tight">AI Chatbot</h1>
               <p class="text-xs sm:text-sm text-gray-500">UI Kit • HTML + Tailwind (CDN)</p>
@@ -220,15 +220,15 @@
           <!-- END: ChatHeader -->
 
           <!-- BEGIN: ChatBody (scrollable) -->
-          <div class="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6" role="log" aria-live="polite" aria-relevant="additions text">
-            <ol role="list" class="space-y-4 w-full sm:w-[min(55vw,100%)] mx-auto">
+          <div class="flex-1 overflow-y-auto px-3 py-3 sm:px-4 sm:py-4" role="log" aria-live="polite" aria-relevant="additions text">
+            <ol role="list" class="space-y-3 w-full sm:w-[min(55vw,100%)] mx-auto">
               <!-- BEGIN: MessageBubble (AI) -->
               <li role="listitem" class="flex items-start gap-3">
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
                   <i class="fa-solid fa-robot"></i>
                 </div>
               <article class="relative pt-2 max-w-full flex-1">
-                  <div class="rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm">
+                  <div class="rounded-2xl rounded-tl-md bg-gray-100 px-3 py-2.5 text-sm text-gray-800 shadow-sm">
                     <p>Xin chào! Mình là trợ lý AI. Mình có thể giúp gì cho bạn hôm nay?</p>
                   </div>
                   <div class="mt-1 flex items-center gap-2">
@@ -265,7 +265,7 @@
               <!-- BEGIN: MessageBubble (User) -->
               <li role="listitem" class="flex justify-end">
                 <article class="relative pt-2 max-w-full text-right">
-                  <div class="inline-block rounded-2xl rounded-tr-md bg-blue-500 px-4 py-3 text-sm font-medium text-white shadow-sm">
+                  <div class="inline-block rounded-2xl rounded-tr-md bg-blue-500 px-3 py-2.5 text-sm font-medium text-white shadow-sm">
                     <p>Hãy tóm tắt bảng số liệu dưới đây và cho mình gợi ý.</p>
                   </div>
                   <div class="mt-1 flex justify-end gap-2">
@@ -305,7 +305,7 @@
                   <i class="fa-solid fa-robot"></i>
                 </div>
                 <article class="max-w-full flex-1">
-                  <div class="rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm">
+                  <div class="rounded-2xl rounded-tl-md bg-gray-100 px-3 py-2.5 text-sm text-gray-800 shadow-sm">
                     <p class="mb-3">Dưới đây là bảng tóm tắt theo quý. Điểm đáng chú ý: Q2 tăng mạnh, Q3 giảm nhẹ.</p>
                     <div class="overflow-x-auto">
                       <table class="min-w-full text-left text-sm text-gray-800">
@@ -361,7 +361,7 @@
                   <i class="fa-solid fa-robot"></i>
                 </div>
                 <article class="max-w-full flex-1">
-                  <div class="rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm">
+                  <div class="rounded-2xl rounded-tl-md bg-gray-100 px-3 py-2.5 text-sm text-gray-800 shadow-sm">
                     <p class="mb-3">Đây là ảnh minh họa sản phẩm. Nhận xét: phối màu hài hoà, chữ rõ ràng.</p>
                     <div class="relative group">
                     <figure>
@@ -394,7 +394,7 @@
                 </div>
                 <article class="relative pt-2 max-w-full flex-1">
                   <div class="rounded-2xl rounded-tl-md overflow-hidden shadow-sm">
-                    <div class="flex items-center justify-between gap-2 bg-slate-800 text-slate-100 px-4 py-2 border-b border-slate-700">
+                    <div class="flex items-center justify-between gap-2 bg-slate-800 text-slate-100 px-3 py-2 border-b border-slate-700">
                       <div class="flex items-center gap-2 text-xs font-medium">
                         <i class="fa-brands fa-python text-blue-300" aria-hidden="true"></i>
                         <span>Python</span>
@@ -450,7 +450,7 @@ if __name__ == "__main__":
                       </div>
                     </div>
                     <div class="bg-gradient-to-b from-slate-950 to-slate-900">
-                      <pre aria-label="Đoạn mã Python" class="w-full overflow-x-auto p-4 font-mono text-[13px] leading-6 text-slate-100"><code class="language-python"># Tính tổng dãy số và in kết quả
+                      <pre aria-label="Đoạn mã Python" class="w-full overflow-x-auto p-3 font-mono text-[13px] leading-6 text-slate-100"><code class="language-python"># Tính tổng dãy số và in kết quả
 def sum_numbers(nums: list[int]) -> int:
     return sum(nums)
 
@@ -485,7 +485,7 @@ if __name__ == "__main__":
                   <i class="fa-solid fa-robot"></i>
                 </div>
                 <article class="max-w-full flex-1">
-                  <div class="inline-flex items-center rounded-2xl rounded-tl-md bg-gray-100 px-4 py-3 text-sm text-gray-800 shadow-sm" aria-live="polite">
+                  <div class="inline-flex items-center rounded-2xl rounded-tl-md bg-gray-100 px-3 py-2.5 text-sm text-gray-800 shadow-sm" aria-live="polite">
                     <span class="sr-only">AI đang nhập...</span>
                     <span aria-hidden="true" class="typing-dots">
                       <span class="dot"></span>
@@ -502,10 +502,10 @@ if __name__ == "__main__":
           <!-- END: ChatBody -->
 
           <!-- BEGIN: InputBar -->
-          <footer class="border-t border-gray-100 bg-white/90 px-3 py-2 sm:px-5">
-            <form action="#" aria-label="Gửi tin nhắn" class="space-y-2 w-full sm:w-[min(55vw,100%)] mx-auto">
+          <footer class="border-t border-gray-100 bg-white/90 px-2.5 py-2 sm:px-4">
+            <form action="#" aria-label="Gửi tin nhắn" class="space-y-1.5 w-full sm:w-[min(55vw,100%)] mx-auto">
               <!-- ChatGPT-like input group -->
-              <div role="group" aria-label="Thanh soạn tin" aria-describedby="input-hint" class="chatgpt-bar relative rounded-2xl ring-1 ring-inset ring-gray-200 bg-white/90 backdrop-blur px-3 py-2 shadow-sm transition-colors focus-within:ring-2 focus-within:ring-blue-500 min-h-[52px]">
+              <div role="group" aria-label="Thanh soạn tin" aria-describedby="input-hint" class="chatgpt-bar relative rounded-2xl ring-1 ring-inset ring-gray-200 bg-white/90 backdrop-blur px-2.5 py-1.5 shadow-sm transition-colors focus-within:ring-2 focus-within:ring-blue-500 min-h-[48px]">
                 <!-- Attachment button (left inside) -->
                 <input id="file-input" type="file" class="sr-only" />
                 <label for="file-input" role="button" tabindex="0" aria-label="Tải lên tệp" class="absolute left-2 top-1/2 -translate-y-1/2 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
@@ -536,21 +536,21 @@ if __name__ == "__main__":
               </div>
 
               <!-- Quick suggestions (below input) -->
-              <nav aria-label="Gợi ý nhanh" class="mt-2 -mx-1.5 px-1.5 overflow-x-auto">
+              <nav aria-label="Gợi ý nhanh" class="hidden sm:block mt-1.5 -mx-1 px-1 overflow-x-auto">
                 <div class="flex items-center gap-2 whitespace-nowrap">
-                  <button type="button" data-suggest="Tóm tắt nội dung này" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                  <button type="button" data-suggest="Tóm tắt nội dung này" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                     <i class="fa-regular fa-lightbulb text-gray-500" aria-hidden="true"></i>
                     <span>Tóm tắt</span>
                   </button>
-                  <button type="button" data-suggest="Giải thích đoạn code sau" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                  <button type="button" data-suggest="Giải thích đoạn code sau" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                     <i class="fa-solid fa-code text-gray-500" aria-hidden="true"></i>
                     <span>Giải thích code</span>
                   </button>
-                  <button type="button" data-suggest="Tạo dàn ý nhanh cho chủ đề này" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                  <button type="button" data-suggest="Tạo dàn ý nhanh cho chủ đề này" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                     <i class="fa-solid fa-list-ul text-gray-500" aria-hidden="true"></i>
                     <span>Dàn ý</span>
                   </button>
-                  <button type="button" data-suggest="Cho mình gợi ý tiếp theo" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                  <button type="button" data-suggest="Cho mình gợi ý tiếp theo" class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                     <i class="fa-solid fa-arrow-right text-gray-500" aria-hidden="true"></i>
                     <span>Gợi ý tiếp</span>
                   </button>
