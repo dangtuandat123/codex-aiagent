@@ -377,7 +377,7 @@
               <!-- BEGIN: MessageBubble (User) -->
               <li role="listitem" class="flex justify-end">
                 <article class="relative pt-2 max-w-full text-right">
-                  <div class="inline-block rounded-2xl rounded-tr-md bg-blue-500 px-3 py-2.5 text-sm font-medium text-white shadow-sm">
+                  <div class="inline-block rounded-2xl rounded-tr-md bg-white px-3 py-2.5 text-sm font-medium text-gray-900 ring-1 ring-gray-200 shadow-sm">
                     <p>Hãy tóm tắt bảng số liệu dưới đây và cho mình gợi ý.</p>
                   </div>
                   <div class="mt-1 flex justify-end gap-2">
@@ -410,6 +410,92 @@
                 </article>
               </li>
               <!-- END: MessageBubble (User) -->
+
+              <!-- BEGIN: MessageBubble (User - File) -->
+              <li role="listitem" class="flex justify-end">
+                <article class="relative pt-2 max-w-full text-right">
+                  <div class="inline-flex items-start sm:items-center gap-3 rounded-2xl rounded-tr-md bg-white p-2.5 text-sm text-gray-900 ring-1 ring-gray-200 shadow-sm hover:ring-gray-300">
+                    <div class="flex h-10 w-10 flex-none items-center justify-center rounded-md bg-red-50 text-red-600 ring-1 ring-inset ring-red-100">
+                      <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
+                    </div>
+                    <div class="min-w-0 text-left">
+                      <p class="truncate max-w-[240px] sm:max-w-[320px] font-medium">Report_Q4_2024.pdf</p>
+                      <p class="mt-0.5 text-xs text-gray-500">
+                        <span class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 text-[11px] font-medium text-gray-700 ring-1 ring-inset ring-gray-200">
+                          <i class="fa-solid fa-file" aria-hidden="true"></i>
+                          <span>PDF</span>
+                        </span>
+                        <span class="mx-1.5 text-gray-300">•</span>
+                        1.2 MB
+                      </p>
+                    </div>
+                    <a href="#" download="Report_Q4_2024.pdf" role="button" aria-label="Tải xuống file"
+                       class="ml-auto inline-flex items-center gap-1.5 rounded-md bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-300 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                      <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+                      <span>Tải xuống</span>
+                    </a>
+                  </div>
+                  <p class="mt-1 text-right text-xs text-gray-500">Bạn • 09:32</p>
+                </article>
+              </li>
+              <!-- END: MessageBubble (User - File) -->
+
+              <!-- BEGIN: MessageBubble (User - Files) -->
+              <li role="listitem" class="flex justify-end">
+                <article class="relative pt-2 max-w-full text-right">
+                  <div class="inline-flex w-[min(92vw,32rem)] flex-col gap-2 rounded-2xl rounded-tr-md bg-white p-2.5 sm:p-3 text-sm text-gray-900 ring-1 ring-gray-200 shadow-sm hover:ring-gray-300">
+                    <ul class="divide-y divide-gray-200">
+                      <!-- File 1: PDF -->
+                      <li class="flex items-center gap-3 py-1.5 first:pt-0 last:pb-0">
+                        <div class="flex h-10 w-10 flex-none items-center justify-center rounded-md bg-red-50 text-red-600 ring-1 ring-inset ring-red-100">
+                          <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
+                        </div>
+                        <div class="min-w-0 text-left">
+                          <p class="truncate max-w-[240px] sm:max-w-[360px] font-medium">Report_Q4_2024.pdf</p>
+                          <p class="text-xs text-gray-500">PDF • 1.2 MB</p>
+                        </div>
+                        <a href="#" download="Report_Q4_2024.pdf" role="button" aria-label="Tải xuống Report_Q4_2024.pdf"
+                           class="ml-auto inline-flex items-center gap-1.5 rounded-md bg-white px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-300 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                          <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+                          <span>Tải xuống</span>
+                        </a>
+                      </li>
+                      <!-- File 2: DOCX -->
+                      <li class="flex items-center gap-3 py-1.5 first:pt-0 last:pb-0">
+                        <div class="flex h-10 w-10 flex-none items-center justify-center rounded-md bg-blue-50 text-blue-600 ring-1 ring-inset ring-blue-100">
+                          <i class="fa-solid fa-file-word" aria-hidden="true"></i>
+                        </div>
+                        <div class="min-w-0 text-left">
+                          <p class="truncate max-w-[240px] sm:max-w-[360px] font-medium">Proposal_2025.docx</p>
+                          <p class="text-xs text-gray-500">DOCX • 320 KB</p>
+                        </div>
+                        <a href="#" download="Proposal_2025.docx" role="button" aria-label="Tải xuống Proposal_2025.docx"
+                           class="ml-auto inline-flex items-center gap-1.5 rounded-md bg-white px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-300 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                          <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+                          <span>Tải xuống</span>
+                        </a>
+                      </li>
+                      <!-- File 3: PNG -->
+                      <li class="flex items-center gap-3 py-1.5 first:pt-0 last:pb-0">
+                        <div class="flex h-10 w-10 flex-none items-center justify-center rounded-md bg-emerald-50 text-emerald-600 ring-1 ring-inset ring-emerald-100">
+                          <i class="fa-solid fa-file-image" aria-hidden="true"></i>
+                        </div>
+                        <div class="min-w-0 text-left">
+                          <p class="truncate max-w-[240px] sm:max-w-[360px] font-medium">Screenshot_2025-01-05.png</p>
+                          <p class="text-xs text-gray-500">PNG • 860 KB</p>
+                        </div>
+                        <a href="#" download="Screenshot_2025-01-05.png" role="button" aria-label="Tải xuống Screenshot_2025-01-05.png"
+                           class="ml-auto inline-flex items-center gap-1.5 rounded-md bg-white px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-300 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                          <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+                          <span>Tải xuống</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <p class="mt-1 text-right text-xs text-gray-500">Bạn • 09:33</p>
+                </article>
+              </li>
+              <!-- END: MessageBubble (User - Files) -->
 
               <!-- BEGIN: MessageBubble (AI - Table) -->
               <li role="listitem" class="flex items-start gap-3">
@@ -776,7 +862,7 @@ print("5! =", factorial(5))
               <!-- ChatGPT-like input group -->
               <div role="group" aria-label="Thanh soạn tin" aria-describedby="input-hint" class="chatgpt-bar relative rounded-2xl ring-1 ring-gray-200 bg-gray-50 px-2.5 py-1.5 shadow-sm transition-colors hover:ring-gray-300 focus-within:ring-2 focus-within:ring-blue-500 min-h-[48px]">
                 <!-- Attachment button (left inside) -->
-                <input id="file-input" type="file" class="sr-only" />
+                <input id="file-input" type="file" multiple class="sr-only" />
                 <label for="file-input" role="button" tabindex="0" aria-label="Tải lên tệp" class="absolute left-2 top-1/2 -translate-y-1/2 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                   <i class="fa-solid fa-plus" aria-hidden="true"></i>
                   <span class="sr-only">Chọn tệp từ máy</span>
@@ -803,6 +889,64 @@ print("5! =", factorial(5))
                   <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
                 </button>
               </div>
+
+              <!-- BEGIN: Selected Files Preview (static UI) -->
+              <div aria-label="Tệp đã chọn" class="mt-2">
+                <div class="inline-flex w-[min(92vw,36rem)] items-start gap-2 rounded-2xl bg-white p-2.5 sm:p-3 ring-1 ring-gray-200 shadow-sm">
+                  <i class="fa-solid fa-paperclip mt-1.5 text-gray-500" aria-hidden="true"></i>
+                  <div class="min-w-0 flex-1">
+                    <div class="mb-1 flex items-center justify-between gap-2">
+                      <p class="text-xs font-medium text-gray-700">Tệp đã chọn (3)</p>
+                      <a href="#" role="button" aria-label="Xóa tất cả" class="inline-flex items-center gap-1 rounded px-2 py-0.5 text-[11px] font-medium text-gray-600 ring-1 ring-inset ring-gray-200 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                        <i class="fa-regular fa-trash-can" aria-hidden="true"></i>
+                        <span>Xóa tất cả</span>
+                      </a>
+                    </div>
+                    <ul class="divide-y divide-gray-200" role="list">
+                      <!-- File item: PDF -->
+                      <li class="flex items-center gap-3 py-1.5 first:pt-0 last:pb-0" role="listitem">
+                        <div class="flex h-8 w-8 flex-none items-center justify-center rounded bg-red-50 text-red-600 ring-1 ring-inset ring-red-100">
+                          <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
+                        </div>
+                        <div class="min-w-0">
+                          <p class="truncate max-w-[240px] sm:max-w-[360px] text-sm font-medium text-gray-900">Report_Q4_2024.pdf</p>
+                          <p class="text-xs text-gray-500">PDF • 1.2 MB</p>
+                        </div>
+                        <button type="button" aria-label="Bỏ tệp này" class="ml-auto inline-flex h-7 w-7 items-center justify-center rounded-md text-gray-500 ring-1 ring-inset ring-gray-200 hover:bg-gray-100 hover:text-gray-700">
+                          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                        </button>
+                      </li>
+                      <!-- File item: DOCX -->
+                      <li class="flex items-center gap-3 py-1.5 first:pt-0 last:pb-0" role="listitem">
+                        <div class="flex h-8 w-8 flex-none items-center justify-center rounded bg-blue-50 text-blue-600 ring-1 ring-inset ring-blue-100">
+                          <i class="fa-solid fa-file-word" aria-hidden="true"></i>
+                        </div>
+                        <div class="min-w-0">
+                          <p class="truncate max-w-[240px] sm:max-w-[360px] text-sm font-medium text-gray-900">Proposal_2025.docx</p>
+                          <p class="text-xs text-gray-500">DOCX • 320 KB</p>
+                        </div>
+                        <button type="button" aria-label="Bỏ tệp này" class="ml-auto inline-flex h-7 w-7 items-center justify-center rounded-md text-gray-500 ring-1 ring-inset ring-gray-200 hover:bg-gray-100 hover:text-gray-700">
+                          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                        </button>
+                      </li>
+                      <!-- File item: PNG -->
+                      <li class="flex items-center gap-3 py-1.5 first:pt-0 last:pb-0" role="listitem">
+                        <div class="flex h-8 w-8 flex-none items-center justify-center rounded bg-emerald-50 text-emerald-600 ring-1 ring-inset ring-emerald-100">
+                          <i class="fa-solid fa-file-image" aria-hidden="true"></i>
+                        </div>
+                        <div class="min-w-0">
+                          <p class="truncate max-w-[240px] sm:max-w-[360px] text-sm font-medium text-gray-900">Screenshot_2025-01-05.png</p>
+                          <p class="text-xs text-gray-500">PNG • 860 KB</p>
+                        </div>
+                        <button type="button" aria-label="Bỏ tệp này" class="ml-auto inline-flex h-7 w-7 items-center justify-center rounded-md text-gray-500 ring-1 ring-inset ring-gray-200 hover:bg-gray-100 hover:text-gray-700">
+                          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- END: Selected Files Preview (static UI) -->
 
               <!-- Quick suggestions (below input) -->
               <nav aria-label="Gợi ý nhanh" class="hidden sm:block mt-1.5 -mx-1 px-1 overflow-x-auto">
@@ -1056,86 +1200,6 @@ print("5! =", factorial(5))
       }
     });
 
-    // Show a chat message when user uploads file(s)
-    (function () {
-      var fileInput = document.getElementById('file-input');
-      var chatList = document.getElementById('chat-list');
-      var chatLog = document.querySelector('[role="log"]');
-
-      if (!fileInput || !chatList) return;
-
-      function formatBytes(bytes) {
-        if (!Number.isFinite(bytes) || bytes <= 0) return '';
-        var units = ['B', 'KB', 'MB', 'GB'];
-        var i = Math.floor(Math.log(bytes) / Math.log(1024));
-        i = Math.max(0, Math.min(i, units.length - 1));
-        var val = bytes / Math.pow(1024, i);
-        return (val >= 100 ? Math.round(val) : val.toFixed(1)).replace(/\.0$/, '') + ' ' + units[i];
-      }
-
-      function timeNow() {
-        try {
-          return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        } catch (_) {
-          return '';
-        }
-      }
-
-      fileInput.addEventListener('change', function (ev) {
-        var files = ev.target && ev.target.files ? Array.from(ev.target.files) : [];
-        if (!files.length) return;
-
-        files.forEach(function (f) {
-          var li = document.createElement('li');
-          li.setAttribute('role', 'listitem');
-          li.className = 'flex justify-end';
-
-          var article = document.createElement('article');
-          article.className = 'relative pt-2 max-w-full text-right';
-
-          var bubble = document.createElement('div');
-          bubble.className = 'inline-flex items-center gap-2 rounded-2xl rounded-tr-md bg-blue-500 px-3 py-2.5 text-sm font-medium text-white shadow-sm';
-
-          var icon = document.createElement('i');
-          icon.className = 'fa-regular fa-file';
-          icon.setAttribute('aria-hidden', 'true');
-
-          var meta = document.createElement('div');
-          meta.className = 'min-w-0 text-left';
-
-          var nameEl = document.createElement('p');
-          nameEl.className = 'truncate max-w-[240px] sm:max-w-[320px]';
-          nameEl.textContent = f.name || 'Tệp không tên';
-
-          var sizeEl = document.createElement('p');
-          sizeEl.className = 'text-xs text-blue-100';
-          sizeEl.textContent = formatBytes(f.size);
-
-          meta.appendChild(nameEl);
-          if (f.size) meta.appendChild(sizeEl);
-
-          bubble.appendChild(icon);
-          bubble.appendChild(meta);
-
-          var ts = document.createElement('p');
-          ts.className = 'mt-1 text-xs text-gray-500';
-          ts.textContent = 'Bạn • ' + timeNow();
-
-          article.appendChild(bubble);
-          article.appendChild(ts);
-          li.appendChild(article);
-          chatList.appendChild(li);
-        });
-
-        // Reset input so selecting the same file again still triggers change
-        try { fileInput.value = ''; } catch (_) {}
-
-        // Scroll chat to bottom
-        try {
-          var scroller = chatLog || chatList.parentElement;
-          if (scroller) scroller.scrollTop = scroller.scrollHeight;
-        } catch (_) {}
-      });
-    })();
+    /* (No JS required for file message per request) */
   </script>
 </html>
