@@ -333,7 +333,7 @@
 
           <!-- BEGIN: ChatBody (scrollable) -->
           <div class="flex-1 overflow-y-auto px-3 py-3 sm:px-4 sm:py-4" role="log" aria-live="polite" aria-relevant="additions text">
-            <ol role="list" class="space-y-3 w-full sm:w-[min(55vw,100%)] mx-auto">
+            <ol id="chat-list" role="list" class="space-y-3 w-full sm:w-[min(55vw,100%)] mx-auto">
               <!-- BEGIN: MessageBubble (AI) -->
               <li role="listitem" class="flex items-start gap-3">
                 <div class="mt-1 hidden h-8 w-8 flex-none select-none items-center justify-center rounded-full bg-gray-200 text-gray-700 sm:inline-flex" aria-hidden="true">
@@ -1055,5 +1055,87 @@ print("5! =", factorial(5))
         try { ta.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {}
       }
     });
+
+    // Show a chat message when user uploads file(s)
+    (function () {
+      var fileInput = document.getElementById('file-input');
+      var chatList = document.getElementById('chat-list');
+      var chatLog = document.querySelector('[role="log"]');
+
+      if (!fileInput || !chatList) return;
+
+      function formatBytes(bytes) {
+        if (!Number.isFinite(bytes) || bytes <= 0) return '';
+        var units = ['B', 'KB', 'MB', 'GB'];
+        var i = Math.floor(Math.log(bytes) / Math.log(1024));
+        i = Math.max(0, Math.min(i, units.length - 1));
+        var val = bytes / Math.pow(1024, i);
+        return (val >= 100 ? Math.round(val) : val.toFixed(1)).replace(/\.0$/, '') + ' ' + units[i];
+      }
+
+      function timeNow() {
+        try {
+          return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        } catch (_) {
+          return '';
+        }
+      }
+
+      fileInput.addEventListener('change', function (ev) {
+        var files = ev.target && ev.target.files ? Array.from(ev.target.files) : [];
+        if (!files.length) return;
+
+        files.forEach(function (f) {
+          var li = document.createElement('li');
+          li.setAttribute('role', 'listitem');
+          li.className = 'flex justify-end';
+
+          var article = document.createElement('article');
+          article.className = 'relative pt-2 max-w-full text-right';
+
+          var bubble = document.createElement('div');
+          bubble.className = 'inline-flex items-center gap-2 rounded-2xl rounded-tr-md bg-blue-500 px-3 py-2.5 text-sm font-medium text-white shadow-sm';
+
+          var icon = document.createElement('i');
+          icon.className = 'fa-regular fa-file';
+          icon.setAttribute('aria-hidden', 'true');
+
+          var meta = document.createElement('div');
+          meta.className = 'min-w-0 text-left';
+
+          var nameEl = document.createElement('p');
+          nameEl.className = 'truncate max-w-[240px] sm:max-w-[320px]';
+          nameEl.textContent = f.name || 'Tệp không tên';
+
+          var sizeEl = document.createElement('p');
+          sizeEl.className = 'text-xs text-blue-100';
+          sizeEl.textContent = formatBytes(f.size);
+
+          meta.appendChild(nameEl);
+          if (f.size) meta.appendChild(sizeEl);
+
+          bubble.appendChild(icon);
+          bubble.appendChild(meta);
+
+          var ts = document.createElement('p');
+          ts.className = 'mt-1 text-xs text-gray-500';
+          ts.textContent = 'Bạn • ' + timeNow();
+
+          article.appendChild(bubble);
+          article.appendChild(ts);
+          li.appendChild(article);
+          chatList.appendChild(li);
+        });
+
+        // Reset input so selecting the same file again still triggers change
+        try { fileInput.value = ''; } catch (_) {}
+
+        // Scroll chat to bottom
+        try {
+          var scroller = chatLog || chatList.parentElement;
+          if (scroller) scroller.scrollTop = scroller.scrollHeight;
+        } catch (_) {}
+      });
+    })();
   </script>
 </html>
